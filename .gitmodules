@@ -1,0 +1,3 @@
+[submodule "BucStop-MicroServices"]
+	path = BucStop-MicroServices
+	url = https://github.com/ChickenContenders/BucStop-MicroServices

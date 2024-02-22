@@ -44,7 +44,28 @@ namespace BucStop.Controllers
                 return View();
             }
         }
+        /// <summary>
+        /// GuestLogin generates a blank email to allow guests to play games without signing into a personal account.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> GuestLogin()
+        {
+            //Generates a blank string that is used as a guest login placeholder.
+            string email = string.Empty;
+            var claims = new[]
+            {
+                    new Claim(ClaimTypes.Name, email),
+                    new Claim(ClaimTypes.NameIdentifier, "user_id"),
+            };
 
+            var claimsIdentity = new ClaimsIdentity(claims, "custom");
+            var userPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+            // Sign in the user
+            await HttpContext.SignInAsync("CustomAuthenticationScheme", userPrincipal);
+            return RedirectToAction("Index", "Games");
+            //This method was pulled from the original login method above. RegEx check was removed.
+        }
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync("CustomAuthenticationScheme");

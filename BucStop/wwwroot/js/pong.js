@@ -11,9 +11,9 @@
 
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
-const grid = 15; // Standard size used by most elements. Also provides offset to prevent elements from going off the left side.
-const paddleWidth = grid * 5; // 75 normally
-const maxPaddleX = canvas.width - grid - paddleWidth; // The furthest that a paddle can move to the right
+const pixelsPerTile = 15; // Standard size used by most elements. Also provides offset to prevent elements from going off the left side.
+const paddleWidth = pixelsPerTile * 5; // 75 normally
+const maxPaddleX = canvas.width - pixelsPerTile - paddleWidth; // The furthest that a paddle can move to the right
 
 var paddleSpeed = 6; // Speed that the paddle moves per tick
 var ballSpeed = 6; // Speed that the ball moves per tick
@@ -21,13 +21,15 @@ var playerScore = 0;
 var computerScore = 0;
 var resetting = false;
 
+var consecutivePlayerWins = 0;
+
 // Struct which holds the data for the top paddle (the computer)
 const topPaddle = {
     // start in the middle of the game on the top side
     // X and y position of this object is the top left point
-    y: grid * 2,
+    y: pixelsPerTile * 2,
     x: canvas.width / 2 - paddleWidth / 2,
-    height: grid,
+    height: pixelsPerTile,
     width: paddleWidth,
 
     // paddle velocity
@@ -38,9 +40,9 @@ const topPaddle = {
 const bottomPaddle = {
     // start in the middle of the game on the bottom side
     // X and y position of this object is the top left point
-    y: canvas.height - grid * 3,
+    y: canvas.height - pixelsPerTile * 3,
     x: canvas.width / 2 - paddleWidth / 2,
-    height: grid,
+    height: pixelsPerTile,
     width: paddleWidth,
 
     // paddle velocity
@@ -51,10 +53,10 @@ const bottomPaddle = {
 const ball = {
     // start in the middle of the game
     // X and y position of the ball is the top left corner
-    x: canvas.width / 2 - grid / 2, // Adjust for grid size
-    y: canvas.height / 2 - grid / 2, // Adjust for grid size
-    width: grid,
-    height: grid,
+    x: canvas.width / 2 - pixelsPerTile / 2, // Adjust for pixelsPerTile size
+    y: canvas.height / 2 - pixelsPerTile / 2, // Adjust for pixelsPerTile size
+    width: pixelsPerTile,
+    height: pixelsPerTile,
 
     // keep track of when need to reset the ball position
     resetting: false,
@@ -98,8 +100,8 @@ function controlAIPaddle() {
 // Function to reset the game
 function resetGame() {
     // Reset the ball and paddle positions
-    ball.x = canvas.width / 2 - grid / 2; // Adjust for grid size
-    ball.y = canvas.height / 2 - grid / 2; // Adjust for grid size
+    ball.x = canvas.width / 2 - pixelsPerTile / 2; // Adjust for pixelsPerTile size
+    ball.y = canvas.height / 2 - pixelsPerTile / 2; // Adjust for pixelsPerTile size
     // Recenter the two paddles
     topPaddle.x = canvas.width / 2 - paddleWidth / 2;
     bottomPaddle.x = canvas.width / 2 - paddleWidth / 2;
@@ -138,15 +140,15 @@ function loop() {
     bottomPaddle.x += bottomPaddle.dy;
 
     // prevent paddles from going through walls
-    if (topPaddle.x < grid) {
-        topPaddle.x = grid;
+    if (topPaddle.x < pixelsPerTile) {
+        topPaddle.x = pixelsPerTile;
     }
     else if (topPaddle.x > maxPaddleX) {
         topPaddle.x = maxPaddleX;
     }
 
-    if (bottomPaddle.x < grid) {
-        bottomPaddle.x = grid;
+    if (bottomPaddle.x < pixelsPerTile) {
+        bottomPaddle.x = pixelsPerTile;
     }
     else if (bottomPaddle.x > maxPaddleX) {
         bottomPaddle.x = maxPaddleX;
@@ -162,12 +164,12 @@ function loop() {
     ball.y += ball.dy;
 
     // prevent ball from going through walls by changing its velocity
-    if (ball.x < grid) {
-        ball.x = grid;
+    if (ball.x < pixelsPerTile) {
+        ball.x = pixelsPerTile;
         ball.dx *= -1;
     }
-    else if (ball.x + grid > canvas.width - grid) {
-        ball.x = canvas.width - grid * 2;
+    else if (ball.x + pixelsPerTile > canvas.width - pixelsPerTile) {
+        ball.x = canvas.width - pixelsPerTile * 2;
         ball.dx *= -1;
     }
 
@@ -196,10 +198,18 @@ function loop() {
     // Display the scores
     context.font = '24px Arial';
     context.fillText(`Player: ${ playerScore }`, 20, 30);
-    context.fillText(`Computer: ${ computerScore }`, canvas.width - 200, 30);
+    context.fillText(`Computer: ${computerScore}`, canvas.width - 200, 30);
+
+    context.font = '12px Arial'
+    context.fillText(`Consecutive Wins: ${consecutivePlayerWins}`, canvas.width - 200, canvas.height - 30);
 
     // End the game if either player or computer reaches 7 points
-    if (playerScore === 7 || computerScore === 7) {
+    if (playerScore === 7) {
+        consecutivePlayerWins++;
+        endGame();
+    }
+    if (computerScore === 7) {
+        consecutivePlayerWins = 0;
         endGame();
     }
 
@@ -224,8 +234,8 @@ function loop() {
 
     // draw walls
     context.fillStyle = 'black';
-    context.fillRect(0, 0, grid, canvas.height);
-    context.fillRect(canvas.width - grid, 0, canvas.width, canvas.height);
+    context.fillRect(0, 0, pixelsPerTile, canvas.height);
+    context.fillRect(canvas.width - pixelsPerTile, 0, canvas.width, canvas.height);
 
     
 }

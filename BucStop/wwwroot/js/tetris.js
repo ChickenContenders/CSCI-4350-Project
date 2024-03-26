@@ -19,7 +19,6 @@ let score = 0; //Overall score variable
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
@@ -65,7 +64,6 @@ function rotate(matrix) {
     const result = matrix.map((row, i) =>
         row.map((val, j) => matrix[N - j][i])
     );
-
     return result;
 }
 
@@ -162,7 +160,7 @@ function showGameOver() {
 
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
-const grid = 32;
+const pixelsPerTile = 32;
 const tetrominoSequence = [];
 
 // keep track of what is in every cell of the game using a 2d array
@@ -234,10 +232,16 @@ let tetromino = getNextTetromino();
 let rAF = null;  // keep track of the animation frame so we can cancel it
 let gameOver = false;
 
+context.font = '12px arial'
+
 // game loop
 function loop() {
     rAF = requestAnimationFrame(loop);
     context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // display the current score
+    context.fillStyle = 'white'
+    context.fillText(`Score: ${score}`, 5, 20)
 
     // draw the playfield
     for (let row = 0; row < 20; row++) {
@@ -246,8 +250,8 @@ function loop() {
                 const name = playfield[row][col];
                 context.fillStyle = colors[name];
 
-                // drawing 1 px smaller than the grid creates a grid effect
-                context.fillRect(col * grid, row * grid, grid - 1, grid - 1);
+                // drawing 1 px smaller than the pixelsPerTile creates a grid effect
+                context.fillRect(col * pixelsPerTile, row * pixelsPerTile, pixelsPerTile - 1, pixelsPerTile - 1);
             }
         }
     }
@@ -273,8 +277,8 @@ function loop() {
             for (let col = 0; col < tetromino.matrix[row].length; col++) {
                 if (tetromino.matrix[row][col]) {
 
-                    // drawing 1 px smaller than the grid creates a grid effect
-                    context.fillRect((tetromino.col + col) * grid, (tetromino.row + row) * grid, grid - 1, grid - 1);
+                    // drawing 1 px smaller than the pixelsPerTile creates a grid effect
+                    context.fillRect((tetromino.col + col) * pixelsPerTile, (tetromino.row + row) * pixelsPerTile, pixelsPerTile - 1, pixelsPerTile - 1);
                 }
             }
         }

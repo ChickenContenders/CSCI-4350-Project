@@ -69,10 +69,10 @@ const ball = {
 // check for collision between two objects using axis-aligned bounding box (AABB)
 // @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 function collides(obj1, obj2) {
-    return obj1.x < obj2.x + obj2.width &&
-        obj1.x + obj1.width > obj2.x &&
-        obj1.y < obj2.y + obj2.height &&
-        obj1.y + obj1.height > obj2.y;
+    return (obj1.x < obj2.x + obj2.width) &&
+           (obj1.x + obj1.width > obj2.x) &&
+           (obj1.y < obj2.y + obj2.height) &&
+           (obj1.y + obj1.height > obj2.y);
 }
 
 // Add an AI-controlled paddle
@@ -90,11 +90,10 @@ function controlAIPaddle() {
     const aiPaddleVelocity = Math.min(aiPaddleSpeed, Math.abs(dx));
 
     // Move the AI paddle towards the target position
-    if (dx > 0) {
+    if (dx > 0)
         topPaddle.dy = aiPaddleVelocity;
-    } else {
+    else
         topPaddle.dy = -aiPaddleVelocity;
-    }
 }
 
 // Function to reset the game
@@ -140,19 +139,15 @@ function loop() {
     bottomPaddle.x += bottomPaddle.dy;
 
     // prevent paddles from going through walls
-    if (topPaddle.x < pixelsPerTile) {
+    if (topPaddle.x < pixelsPerTile)
         topPaddle.x = pixelsPerTile;
-    }
-    else if (topPaddle.x > maxPaddleX) {
+    else if (topPaddle.x > maxPaddleX)
         topPaddle.x = maxPaddleX;
-    }
 
-    if (bottomPaddle.x < pixelsPerTile) {
+    if (bottomPaddle.x < pixelsPerTile)
         bottomPaddle.x = pixelsPerTile;
-    }
-    else if (bottomPaddle.x > maxPaddleX) {
+    else if (bottomPaddle.x > maxPaddleX)
         bottomPaddle.x = maxPaddleX;
-    }
 
     // draw paddles
     context.fillStyle = 'black';
@@ -200,18 +195,11 @@ function loop() {
     context.fillText(`Player: ${ playerScore }`, 20, 30);
     context.fillText(`Computer: ${computerScore}`, canvas.width - 200, 30);
 
-    context.font = '12px Arial'
-    context.fillText(`Consecutive Wins: ${consecutivePlayerWins}`, canvas.width - 200, canvas.height - 30);
-
     // End the game if either player or computer reaches 7 points
-    if (playerScore === 7) {
-        consecutivePlayerWins++;
+    if (playerScore === 7)
         endGame();
-    }
-    if (computerScore === 7) {
-        consecutivePlayerWins = 0;
+    else if (computerScore === 7)
         endGame();
-    }
 
     // check to see if ball collides with paddle. if they do change y velocity
     if (collides(ball, topPaddle)) {
@@ -236,29 +224,20 @@ function loop() {
     context.fillStyle = 'black';
     context.fillRect(0, 0, pixelsPerTile, canvas.height);
     context.fillRect(canvas.width - pixelsPerTile, 0, canvas.width, canvas.height);
-
-    
 }
 
 // listen to keyboard events to move the paddles
 document.addEventListener('keydown', function (e) {
-
-    //left arrow key
-    if (e.which === 37) {
+    if (e.which === 37) // left arrow key
         bottomPaddle.dy = -paddleSpeed;
-    }
-
-    //right arrow key
-    else if (e.which === 39) {
+    else if (e.which === 39) // right arrow key
         bottomPaddle.dy = paddleSpeed;
-    }
 });
 
 // listen to keyboard events to stop the paddle if key is released
 document.addEventListener('keyup', function (e) {
-    if (e.which === 37 || e.which === 39) {
+    if (e.which === 37 || e.which === 39)
         bottomPaddle.dy = 0;
-    }
 });
 
 // start the game

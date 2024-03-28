@@ -10,9 +10,9 @@
     <div class="form-group container">
         <div class="row">
             <div class="col-12 col-md-6">
-                <label asp-for="email">Email</label>
-                <input asp-for="email" class="form-control" />
-                <span asp-validation-for="email" class="text-danger"></span>
+                <label asp-for="obscurePhrase">Complete the ETSU Phrase: Go ____ (No exclamation point)</label>
+                <input asp-for="obscurePhrase" class="form-control" />
+                <span asp-validation-for="obscurePhrase" class="text-danger"></span>
             </div>
             <div class="col-12 col-md-4" style="padding-top: 23px">
                 <button type="submit" class="btn btn-primary">Login</button>
@@ -21,18 +21,4 @@
     </div>
 
 
-}
-@using (Html.BeginForm("GuestLogin", "Account", FormMethod.Post))
-{
-     @Html.AntiForgeryToken()
-
-    <div asp-validation-summary="All" class="text-danger"></div>
-
-    <div class="form-group container">
-        <div class="row">
-            <div class="col-12 col-md-4" style="padding-top: 23px">
-                <button type="submit" class="btn btn-primary">Continue as Guest</button>
-            </div>
-        </div>
-    </div>
 }

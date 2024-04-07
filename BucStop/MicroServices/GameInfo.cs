@@ -7,5 +7,6 @@
         public string Description { get; set; }
         public string DateAdded { get; set; }
         public string HowTo { get; set; }
+        public int Id { get; set; }
     }
 }

@@ -44,9 +44,10 @@ namespace BucStop.Controllers
         //Takes the user to the Play page, passing the game object the user wants to play
         public async Task<IActionResult> Play(int id)
         {
-            List<Game> games = await GetGamesWithInfo();
+            //List<Game> games = await GetGamesWithInfo();
+            Game game = await GetGameWithInfoById(id);
 
-            Game game = games.FirstOrDefault(x => x.Id == id);
+            //Game game = games.FirstOrDefault(x => x.Id == id);
             if (game == null)
             {
                 return NotFound();
@@ -68,20 +69,38 @@ namespace BucStop.Controllers
             List<Game> games = _gameService.GetGames();
             GameInfo[] gameInfos = await _httpClient.GetGamesAsync();
 
-            foreach(Game game in games)
+            foreach (Game game in games)
             {
                 GameInfo info = gameInfos.FirstOrDefault(x => x.Title == game.Title);
-                if(info != null)
+                if (info != null)
+                {
+                    game.Author = info.Author;
+                    game.HowTo = info.HowTo;
+                    game.DateAdded = info.DateAdded;
+                    game.Description = $"{info.Description} \n {info.DateAdded}";
+                    game.Id = info.Id;
+                }
+            }
+
+            return games;
+        }
+
+        public async Task<Game> GetGameWithInfoById(int id)
+        {
+            Game game = _gameService.GetGame(id);
+
+                GameInfo info = await _httpClient.GetGameByIdAsync(game.Id);
+                if (info != null)
                 {
                     game.Author = info.Author;
                     game.HowTo = info.HowTo;
                     game.DateAdded = info.DateAdded;
                     game.Description = $"{info.Description} \n {info.DateAdded}";
                 }
-            }
 
-            return games;
+            return game;
         }
+
 
         //Takes the user to the deprecated snake page
         public IActionResult Snake()

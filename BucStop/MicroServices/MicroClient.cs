@@ -26,7 +26,6 @@ namespace BucStop
         {
             try
             {
-                // The /Micro here is the route that is set up by the microservice
                 var responseMessage = await this.client.GetAsync("/Micro");
 
                 if (responseMessage != null)
@@ -41,30 +40,6 @@ namespace BucStop
             }
             return new GameInfo[] { };
 
-        }
-
-        /// <summary>
-        /// Consumes the individual microservice based off of a given id.  Set up by Chris and Noah.  Not tested yet.
-        /// </summary>
-        /// <param name="id">Id of the game you would like.</param>
-        /// <returns>The single game and all its data.</returns>
-        public async Task<GameInfo> GetGameByIdAsync(int id)
-        {
-            try
-            {
-                var responseMessage = await client.GetAsync($"/Micro/Games/Play/{id}"); // Adjust the endpoint URL to include the ID
-
-                if (responseMessage != null)
-                {
-                    var stream = await responseMessage.Content.ReadAsStreamAsync();
-                    return await JsonSerializer.DeserializeAsync<GameInfo>(stream, options);
-                }
-            }
-            catch (HttpRequestException ex)
-            {
-                _logger.LogError(ex.Message);
-            }
-            return null; // Return null if game with specified ID is not found
         }
     }
 }

@@ -1,0 +1,13 @@
+Vision for BucStop
+-A website that ETSU student have built that Kinser cand deploy on an ETSU server to be maintained in the future
+-ETSU students (not necessarily SE) could build games and upload them to this website in a safe place (just ETSU)
+	-No one outside ETSU could access is the goal
+	-Author's responsibility to fix bugs (need a feedback option for the author)
+	-Maybe include some sort of rating system
+	-High score tracking/leaderboard?
+		-Common interface for games so that a common leaderboard could be used
+-Other ETSU students who aren't necessarily in computing department could play the games in between classes
+-Needs to be fully browser based and not run outside of it
+-He envisions people playing it on their phone
+-Must adhere to university policies on content
+-The kind of games could be seen at Play it Again retro arcade

@@ -1,5 +1,16 @@
-# CSCI-4350-Project Spring 2024
-## BucStop Application
+# CSCI-4350-Project [Spring 2024]
+## BucStop Application by Chicken Contenders
+### Members:
+* Austin Mahalla - Scrum Master
+* Jacob Manis – Product Owner
+* Tyler Burleson
+* Trent Williams
+* Noah Horner
+* Carson Crysdale
+* Chris Presnell
+* Chris Upham
+* Nick Sells
+
 <br/>
 
 ### Repositories:

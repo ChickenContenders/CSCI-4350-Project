@@ -15,15 +15,15 @@
 
 ### Repositories:
 These repositories focused on the development of the application
-* CSCI-4350-Project: BucStop Application
-* BucStop-MicroServices: API Gateway
-* MS_Pong: Pong Microservice
-* MS_Snake: Snake Microservice
-* MS_Tetris: Tetris Microservice
+* CSCI-4350-Project: BucStop Application - https://github.com/ChickenContenders/CSCI-4350-Project
+* BucStop-MicroServices: API Gateway - https://github.com/ChickenContenders/BucStop-MicroServices
+* MS_Pong: Pong Microservice - https://github.com/ChickenContenders/MS_Pong
+* MS_Snake: Snake Microservice - https://github.com/ChickenContenders/MS_Snake
+* MS_Tetris: Tetris Microservice - https://github.com/ChickenContenders/MS_Tetris
   
 These repositories are only the ASP applications and updated with each "release." 
-* Bucstop_Release: Repository for automated deployment through Jenkins
-* gMicro-Release: Repository for automated deployment through Jenkins
+* Bucstop_Release: Repository for automated deployment through Jenkins - https://github.com/ChickenContenders/Bucstop_Release
+* gMicro-Release: Repository for automated deployment through Jenkins - https://github.com/ChickenContenders/gMicro-release
 <br/>
 
 ### Notes:
